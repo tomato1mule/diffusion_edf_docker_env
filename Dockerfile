@@ -112,7 +112,8 @@ RUN . /opt/ros/noetic/setup.sh && \
     DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends \
     ros-$ROS_DISTRO-moveit-visual-tools \
     ros-$ROS_DISTRO-octomap-rviz-plugins \
-    ros-$ROS_DISTRO-moveit-commander
+    ros-$ROS_DISTRO-moveit-commander \
+    net-tools
 
 RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50, numpy==1.23
 
