@@ -111,9 +111,10 @@ RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc
 RUN . /opt/ros/noetic/setup.sh && \
     DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends \
     ros-$ROS_DISTRO-moveit-visual-tools \
-    ros-$ROS_DISTRO-octomap-rviz-plugins
+    ros-$ROS_DISTRO-octomap-rviz-plugins \
+    ros-$ROS_DISTRO-moveit-commander
 
-RUN pip install opencv-python 
+RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50, numpy==1.23
 
 RUN echo 'if [ "$color_prompt" = yes ]; then' >> ~/.bashrc && \
     echo '    PS1='\''${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '\''' >> ~/.bashrc && \
