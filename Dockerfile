@@ -16,14 +16,12 @@ WORKDIR /root
 RUN apt update && \
     DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends \
     python3-pip vim
-
-# # --------------------------------------------------------------- #
-# # Install PyTorch
-# # https://pytorch.org/get-started/previous-versions/#linux-and-windows-3
-# # --------------------------------------------------------------- #
-
-# RUN pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
-
+    
+RUN echo 'if [ "$color_prompt" = yes ]; then' >> ~/.bashrc && \
+    echo '    PS1='\''${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '\''' >> ~/.bashrc && \
+    echo 'else' >> ~/.bashrc && \
+    echo '    PS1='\''${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '\''' >> ~/.bashrc && \
+    echo 'fi' >> ~/.bashrc
 
 # --------------------------------------------------------------- #
 # Install ROS
@@ -44,6 +42,16 @@ RUN . /opt/ros/noetic/setup.sh && \
 RUN . /opt/ros/noetic/setup.sh && \
     rosdep init && \
     rosdep update
+
+# --------------------------------------------------------------- #
+# Install PyTorch
+# https://pytorch.org/get-started/previous-versions/#linux-and-windows-3
+# --------------------------------------------------------------- #
+
+RUN pip install numpy==1.23 matplotlib==3.7
+RUN pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1 --extra-index-url https://download.pytorch.org/whl/cu116
+RUN pip install torch-cluster==1.6.0 -f https://data.pyg.org/whl/torch-1.13.1+cu116.html
+RUN pip install torch-scatter==2.0.9 -f https://data.pyg.org/whl/torch-1.13.1+cu116.html
 
 
 # --------------------------------------------------------------- #
@@ -117,10 +125,10 @@ RUN . /opt/ros/noetic/setup.sh && \
     ros-$ROS_DISTRO-ros-numpy \
     net-tools
 
-RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50, numpy==1.23
+RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50 numpy==1.23
 
-RUN echo 'if [ "$color_prompt" = yes ]; then' >> ~/.bashrc && \
-    echo '    PS1='\''${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '\''' >> ~/.bashrc && \
-    echo 'else' >> ~/.bashrc && \
-    echo '    PS1='\''${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '\''' >> ~/.bashrc && \
-    echo 'fi' >> ~/.bashrc
+
+
+
+
+
