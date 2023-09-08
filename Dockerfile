@@ -113,6 +113,8 @@ RUN . /opt/ros/noetic/setup.sh && \
     ros-$ROS_DISTRO-moveit-visual-tools \
     ros-$ROS_DISTRO-octomap-rviz-plugins \
     ros-$ROS_DISTRO-moveit-commander \
+    ros-$ROS_DISTRO-moveit-python \
+    ros-$ROS_DISTRO-ros-numpy \
     net-tools
 
 RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50, numpy==1.23
