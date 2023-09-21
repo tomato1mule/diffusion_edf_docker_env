@@ -125,28 +125,12 @@ RUN . /opt/ros/noetic/setup.sh && \
     ros-$ROS_DISTRO-ros-numpy \
     net-tools
 
-RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50 numpy==1.23 toppra
+RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50 numpy==1.23 toppra pycollada
 
 # --------------------------------------------------------------- #
 # Install Franka_ROS
 # https://frankaemika.github.io/docs/franka_ros.html
 # --------------------------------------------------------------- #
-RUN . /opt/ros/noetic/setup.sh && \
-    DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends ros-noetic-universal-robots
-
-RUN mkdir -p catkin_ws/src && cd catkin_ws && \
-    git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver && \
-    git clone -b melodic-devel https://github.com/ros-industrial/universal_robot.git src/universal_robot
-
-RUN . /opt/ros/noetic/setup.sh && \
-    cd catkin_ws && \
-    apt update -qq && \
-    rosdep update && \
-    rosdep install --from-paths src --ignore-src -y && \
-    catkin_make
-
-RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc
-
 RUN apt update &&  \
     DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends  \
     ros-noetic-franka-description
