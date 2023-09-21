@@ -133,7 +133,7 @@ RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50 numpy==1.23 toppra
 # --------------------------------------------------------------- #
 RUN apt update &&  \
     DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends  \
-    ros-noetic-franka-description
+    ros-noetic-franka-description ros-noetic-franka-gripper
 
 
 
