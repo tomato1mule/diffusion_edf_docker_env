@@ -104,6 +104,10 @@ RUN mkdir -p catkin_ws/src && cd catkin_ws && \
     git clone https://github.com/UniversalRobots/Universal_Robots_ROS_Driver.git src/Universal_Robots_ROS_Driver && \
     git clone -b melodic-devel https://github.com/ros-industrial/universal_robot.git src/universal_robot
 
+# --------------------------------------------------------------- #
+# Configure ROS
+# --------------------------------------------------------------- #
+
 RUN . /opt/ros/noetic/setup.sh && \
     cd catkin_ws && \
     apt update -qq && \
@@ -112,6 +116,8 @@ RUN . /opt/ros/noetic/setup.sh && \
     catkin_make
 
 RUN echo "source /root/catkin_ws/devel/setup.bash" >> ~/.bashrc
+RUN echo "# export ROS_MASTER_URI=http://<roscore ip here>:11311" >> ~/.bashrc
+RUN echo "# export ROS_IP=<your ip here>" >> ~/.bashrc
 
 # --------------------------------------------------------------- #
 # Install Additional Dependencies
@@ -125,7 +131,7 @@ RUN . /opt/ros/noetic/setup.sh && \
     ros-$ROS_DISTRO-ros-numpy \
     net-tools
 
-RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50 numpy==1.23 toppra pycollada
+RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50 numpy==1.23 toppra pycollada pcl transforms3d
 
 # --------------------------------------------------------------- #
 # Install Franka_ROS
@@ -133,7 +139,10 @@ RUN pip install opencv-python jupyter open3d yourdfpy==0.0.50 numpy==1.23 toppra
 # --------------------------------------------------------------- #
 RUN apt update &&  \
     DEBIAN_FRONTEND="noninteractive" apt install -y --no-install-recommends  \
-    ros-noetic-franka-description ros-noetic-franka-gripper
+    ros-noetic-franka-description ros-noetic-franka-gripper ros-noetic-franka-msgs
+
+
+
 
 
 
